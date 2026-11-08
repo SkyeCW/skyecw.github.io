@@ -1,19 +1,55 @@
 <!DOCTYPE html>
-<html>
+<html data-theme="light">
 <head>
   <meta charset="UTF-8">
   <title>SkyeCW 的笔记</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify@4.13.1/lib/themes/vue.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify@4.13.1/lib/themes/vue.css" id="theme-light">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify@4.13.1/lib/themes/dark.css" id="theme-dark" disabled>
   <style>
     /* 调整正文宽度 */
     .markdown-section { max-width: 900px !important; }
     /* 如果你喜欢全宽，用下面这行替换上面那行： */
     /* .markdown-section { max-width: 90% !important; } */
+
+    /* 亮/暗主题切换按钮 */
+    .theme-toggle {
+      position: fixed;
+      right: 16px;
+      bottom: 16px;
+      z-index: 10;
+      width: 40px;
+      height: 40px;
+      padding: 0;
+      border: none;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, .06);
+      font-size: 18px;
+      line-height: 1;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background .2s;
+    }
+    .theme-toggle:hover { background: rgba(0, 0, 0, .12); }
+    html[data-theme="dark"] .theme-toggle { background: rgba(255, 255, 255, .12); }
+    html[data-theme="dark"] .theme-toggle:hover { background: rgba(255, 255, 255, .24); }
   </style>
+  <script>
+    // 首屏渲染前应用主题，避免亮色闪一下
+    (function () {
+      var saved = localStorage.getItem('docsify-theme');
+      var dark = saved ? saved === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+      document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+      document.getElementById('theme-dark').disabled = !dark;
+    })();
+  </script>
 </head>
 <body>
   <div id="app"></div>
+  <button id="theme-toggle" class="theme-toggle" type="button">🌙</button>
+
   <script>
     window.$docsify = {
       name: 'SkyeCW 的笔记',
@@ -23,5 +59,32 @@
     }
   </script>
   <script src="https://cdn.jsdelivr.net/npm/docsify@4.13.1/lib/docsify.min.js"></script>
+  <script>
+    (function () {
+      var btn = document.getElementById('theme-toggle');
+      var darkCss = document.getElementById('theme-dark');
+
+      function apply(dark, persist) {
+        document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+        darkCss.disabled = !dark;
+        btn.textContent = dark ? '☀️' : '🌙';
+        btn.title = dark ? '切换到亮色主题' : '切换到暗色主题';
+        btn.setAttribute('aria-label', btn.title);
+        if (persist) localStorage.setItem('docsify-theme', dark ? 'dark' : 'light');
+      }
+
+      // 主题已在 head 中应用，这里只同步按钮状态
+      apply(document.documentElement.getAttribute('data-theme') === 'dark', false);
+
+      btn.addEventListener('click', function () {
+        apply(document.documentElement.getAttribute('data-theme') !== 'dark', true);
+      });
+
+      // 用户没有手动选择时，跟随系统主题变化
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function (e) {
+        if (!localStorage.getItem('docsify-theme')) apply(e.matches, false);
+      });
+    })();
+  </script>
 </body>
 </html>
