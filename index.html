@@ -35,6 +35,62 @@
     .theme-toggle:hover { background: rgba(0, 0, 0, .12); }
     html[data-theme="dark"] .theme-toggle { background: rgba(255, 255, 255, .12); }
     html[data-theme="dark"] .theme-toggle:hover { background: rgba(255, 255, 255, .24); }
+
+    /* 暗色主题加深：覆盖 docsify dark.css 默认的 #3f3f3f 灰底 */
+    html[data-theme="dark"] {
+      --dark-bg: #000;          /* 页面底色，想再浅一点可改成 #0a0a0a */
+      --dark-panel: #0a0a0a;    /* 侧边栏 */
+      --dark-code: #141414;     /* 代码块 */
+      --dark-border: #262626;   /* 分割线、表格边框 */
+      --dark-text: #e8e8e8;     /* 正文 */
+    }
+    html[data-theme="dark"],
+    html[data-theme="dark"] body { background-color: var(--dark-bg); color: var(--dark-text); }
+    html[data-theme="dark"] .sidebar {
+      background-color: var(--dark-panel);
+      color: var(--dark-text);
+      border-right-color: var(--dark-border);
+    }
+    html[data-theme="dark"] .sidebar ul li a { color: #d0d0d0; }
+    html[data-theme="dark"] .sidebar ul li.active > a { color: #ff8a72; }
+    html[data-theme="dark"] .sidebar-toggle { background-color: rgba(10, 10, 10, .85); }
+    html[data-theme="dark"] .github-corner svg { color: var(--dark-panel); }
+
+    html[data-theme="dark"] .anchor span,
+    html[data-theme="dark"] .markdown-section h1,
+    html[data-theme="dark"] .markdown-section h2,
+    html[data-theme="dark"] .markdown-section h3,
+    html[data-theme="dark"] .markdown-section h4,
+    html[data-theme="dark"] .markdown-section strong { color: #f5f5f5; }
+    html[data-theme="dark"] .markdown-section h5,
+    html[data-theme="dark"] .markdown-section h6 { color: #d8d8d8; }
+    html[data-theme="dark"] .markdown-section blockquote { color: #a8a8a8; }
+    html[data-theme="dark"] .markdown-section em { color: #b9c2c7; }
+    html[data-theme="dark"] .markdown-section hr { border-bottom-color: var(--dark-border); }
+    html[data-theme="dark"] .markdown-section td,
+    html[data-theme="dark"] .markdown-section th { border-color: var(--dark-border); }
+    html[data-theme="dark"] .markdown-section tr { border-top-color: var(--dark-border); }
+    html[data-theme="dark"] .markdown-section tr:nth-child(2n) { background-color: #101010; }
+
+    html[data-theme="dark"] .markdown-section code {
+      background-color: var(--dark-code);
+      color: var(--dark-text);
+    }
+    html[data-theme="dark"] .markdown-section pre { background-color: var(--dark-code); }
+    html[data-theme="dark"] .markdown-section pre > code { color: var(--dark-text); }
+    html[data-theme="dark"] pre:after { color: #8a8a8a; }
+    html[data-theme="dark"] .markdown-section p.tip {
+      background-color: var(--dark-code);
+      color: var(--dark-text);
+    }
+    html[data-theme="dark"] .markdown-section p.tip:before { color: var(--dark-bg); }
+    html[data-theme="dark"] .markdown-section p.tip code { background-color: #1f1f1f; }
+    html[data-theme="dark"] .markdown-section p.warn { background: rgba(234, 111, 90, .14); }
+    html[data-theme="dark"] input[type=search] {
+      background: #1a1a1a;
+      border-color: #303030;
+      color: var(--dark-text);
+    }
   </style>
   <script>
     // 首屏渲染前应用主题，避免亮色闪一下
