@@ -1,0 +1,6 @@
+# --- 网站核心设置 ---
+title: SkyeCW's Homepage
+description: 个人记录的一些学习笔记与技术沉淀。
+
+# --- 主题设置 (注意：必须填英文的主题名) ---
+theme: jekyll-theme-minimal
